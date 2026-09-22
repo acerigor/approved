@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+/*
+ * ------------------------------------------------------------------
+ * DESIGN TOKENS — PLACEHOLDER
+ * Neutral, brand-free values until the Figma design system arrives.
+ * When Figma tokens land, replace the values below and keep the names,
+ * so components built against these tokens restyle without markup changes.
+ * ------------------------------------------------------------------
+ */
+@theme {
+  /* Remove Tailwind's default palette so only project tokens can be used. */
+  --color-*: initial;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  /* Neutrals (placeholder grayscale) */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-500: #71717a;
+  --color-neutral-600: #52525b;
+  --color-neutral-700: #3f3f46;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
+  --color-neutral-950: #09090b;
+
+  /* Brand (placeholder: mapped to neutrals, NOT a brand palette) */
+  --color-brand: var(--color-neutral-900);
+  --color-brand-hover: var(--color-neutral-700);
+  --color-brand-subtle: var(--color-neutral-100);
+  --color-on-brand: var(--color-white);
+
+  /* Text */
+  --color-text: var(--color-neutral-900);
+  --color-text-muted: var(--color-neutral-600); /* 7.7:1 on white, 7.3:1 on surface-muted */
+  --color-text-inverse: var(--color-white);
+
+  /* Surfaces */
+  --color-surface: var(--color-white);
+  --color-surface-muted: var(--color-neutral-50);
+  --color-surface-strong: var(--color-neutral-100);
+  --color-surface-inverse: var(--color-neutral-900);
+
+  /* Borders */
+  --color-border: var(--color-neutral-200);
+  --color-border-strong: var(--color-neutral-400);
+
+  /* Focus ring */
+  --color-focus: var(--color-neutral-950);
+
+  /* Feedback states (functional defaults, all AA on white; replace with Figma values) */
+  --color-success: #166534;
+  --color-success-subtle: #f0fdf4;
+  --color-warning: #92400e;
+  --color-warning-subtle: #fffbeb;
+  --color-error: #b91c1c;
+  --color-error-subtle: #fef2f2;
+  --color-info: #1e40af;
+  --color-info-subtle: #eff6ff;
+
+  /* Type scale: Tailwind defaults (text-xs … text-7xl) are kept as the placeholder scale. */
+
+  /* Radius (placeholder) */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Shadows (placeholder) */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+  --shadow-lg: 0 12px 32px -8px rgb(0 0 0 / 0.12), 0 4px 8px -4px rgb(0 0 0 / 0.06);
+
+  /* Spacing and breakpoints: Tailwind defaults (sm 640, md 768, lg 1024, xl 1280, 2xl 1536). */
+
+  /* Layout */
+  --container-page: 80rem; /* max content width, used as max-w-page */
+}
+
+/*
+ * Font families. `inline` because they point at the CSS variables that
+ * next/font sets on <html> in app/layout.tsx.
+ * PLACEHOLDER: Geist (create-next-app default) until Figma fonts arrive.
+ */
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+/*
+ * ------------------------------------------------------------------
+ * BASE STYLES
+ * ------------------------------------------------------------------
+ */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem; /* keeps anchored headings clear of the sticky header */
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    @apply bg-surface font-sans text-text antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-balance;
+  }
+
+  p {
+    @apply text-pretty;
+  }
+
+  /* Visible, consistent focus state for every interactive element (WCAG 2.4.7 / 2.4.11) */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-focus;
+  }
+
+  /* Respect reduced-motion preferences globally */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/*
+ * ------------------------------------------------------------------
+ * UTILITIES
+ * ------------------------------------------------------------------
+ */
+
+/* Page-width container with mobile-first side padding */
+@utility container-page {
+  @apply mx-auto w-full max-w-page px-4 sm:px-6 lg:px-8;
+}
